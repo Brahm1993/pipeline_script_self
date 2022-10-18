@@ -1,8 +1,16 @@
 node {
     stage('continuous Downloading')
+ {
+    try
     {
     git 'https://github.com/intelliqittrainings/maven.git'
     }
+    catch(exception e1)
+    {
+    mail bcc: '', body: 'jenkins git job fail', cc: '', from: '', replyTo: '', subject: 'Git code fetch fail', to: 'gitadmin@devops.com'
+    exit(1)
+    }
+  }
     stage('continuous Build')
     {
     sh 'mvn package'
